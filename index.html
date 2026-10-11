@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How an AI agent pipeline found Procedure — Palash Tiwari</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { font-family:'Liberation Sans','Helvetica Neue',Arial,'DejaVu Sans',sans-serif; background:#0d1117; color:#e6edf3; font-size:12px; line-height:1.55; }
+  .wrap { max-width:820px; margin:0 auto; padding:34px 30px; }
+  .hero { border:1px solid #30363d; border-radius:10px; padding:22px 24px; background:linear-gradient(180deg,#161b22,#0d1117); margin-bottom:22px; }
+  .kicker { color:#58a6ff; font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin-bottom:8px; }
+  h1 { font-size:23px; line-height:1.25; margin-bottom:10px; color:#fff; }
+  h1 span { color:#58a6ff; }
+  .lead { color:#8b949e; font-size:12.5px; }
+  .lead b { color:#e6edf3; }
+  .flow { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 24px; }
+  .step { flex:1 1 120px; border:1px solid #30363d; border-radius:8px; padding:10px 12px; background:#161b22; position:relative; }
+  .step .n { color:#3fb950; font-weight:700; font-size:11px; }
+  .step .t { color:#fff; font-weight:600; font-size:12px; margin:2px 0 3px; }
+  .step .d { color:#8b949e; font-size:10.5px; }
+  .card { border:1px solid #30363d; border-radius:10px; background:#161b22; padding:16px 18px; margin-bottom:14px; }
+  .card h2 { font-size:13px; color:#fff; margin-bottom:4px; display:flex; align-items:center; gap:8px; }
+  .tag { font-size:9.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:2px 7px; border-radius:20px; }
+  .tag.auto { background:#123524; color:#3fb950; }
+  .tag.human { background:#3d2e00; color:#d29922; }
+  .card p { color:#c9d1d9; font-size:11.5px; margin-bottom:8px; }
+  pre { background:#010409; border:1px solid #30363d; border-radius:8px; padding:11px 13px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; line-height:1.5; color:#c9d1d9; white-space:pre-wrap; margin:6px 0 2px; }
+  pre .c { color:#8b949e; } pre .g { color:#3fb950; } pre .b { color:#58a6ff; } pre .y { color:#d29922; } pre .m { color:#bc8cff; }
+  .meta { color:#8b949e; font-size:10.5px; margin-top:6px; }
+  .note { border-left:2px solid #d29922; background:#1c1a12; color:#e6edf3; padding:10px 14px; border-radius:0 8px 8px 0; font-size:11.5px; margin:18px 0; }
+  .foot { border-top:1px solid #30363d; margin-top:24px; padding-top:16px; color:#8b949e; font-size:11px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .foot a { color:#58a6ff; text-decoration:none; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:640px){ .grid2{grid-template-columns:1fr;} }
+  h2 .s { color:#3fb950; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kicker">Agentic application · career-ops + OpenClaw</div>
+    <h1>I don't apply by hand. <span>An AI agent pipeline found your posting, scored it, identified you as the hiring voice, and drafted this application.</span></h1>
+    <p class="lead">Here's the actual run for <b>Procedure — Full Stack Engineer (AI-Native)</b>. Everything below is real output from my self-hosted job-search pipeline; the only edits are redactions of third-party personal data and secrets. <b>Nothing was ever auto-sent</b> — a human reviews and presses send.</p>
+  </div>
+
+  <div class="flow">
+    <div class="step"><div class="n">01</div><div class="t">Discover</div><div class="d">Scan portals → JD enters the pipeline</div></div>
+    <div class="step"><div class="n">02</div><div class="t">Evaluate</div><div class="d">Score vs my CV, archetype + gaps</div></div>
+    <div class="step"><div class="n">03</div><div class="t">Find the human</div><div class="d">Identify + verify the hiring contact</div></div>
+    <div class="step"><div class="n">04</div><div class="t">Prepare</div><div class="d">Tailored CV (HTML + LaTeX) + prep</div></div>
+    <div class="step"><div class="n">05</div><div class="t">Draft &amp; review</div><div class="d">Outreach drafted; human sends</div></div>
+  </div>
+
+  <div class="card">
+    <h2>01 · Discover <span class="tag auto">agent</span></h2>
+    <p>A scheduled scanner pulled the posting into the pipeline.</p>
+    <pre><span class="c">$ career-ops scan</span>
+<span class="g">+</span> Procedure  ·  Full Stack Engineer (AI-Native)  ·  Remote (India)
+  source: Indeed / LinkedIn   ·  status: queued for evaluation</pre>
+  </div>
+
+  <div class="card">
+    <h2>02 · Evaluate <span class="tag auto">agent</span></h2>
+    <p>Scored against my CV: archetype match, requirement-by-requirement evidence, and — importantly — the gaps it flagged.</p>
+    <pre><span class="c">report #093  ·  2026-10-08</span>
+Archetype : Full-Stack (Django/DRF + React) <span class="b">+ AI-native</span>
+Score     : <span class="y">3.7 / 5</span>
+Matched   : Django/DRF · Django ORM/SQL · React/TS · AWS/Docker · RAG/MCP
+Gaps      : client-services context · deep modern React · <span class="y">comp undisclosed</span>
+Verdict   : exact core stack + AI-native focus — confirm band, then apply</pre>
+    <div class="meta">It scored you honestly, gaps and all — not a flattering auto-cover-letter.</div>
+  </div>
+
+  <div class="card">
+    <h2>03 · Find the human <span class="tag auto">agent</span></h2>
+    <p>The "reacher" agent read your posting, recognised it was written in the first person by the CTO, and resolved the work email rather than sending this to a generic inbox.</p>
+    <pre><span class="c">$ reacher run 093</span>
+Poster voice  : first-person, engineering-mentor framing  →  likely CTO/author
+Contact found : <span class="b">Ulhas Mandrawadkar</span> — Co-Founder &amp; CTO (the JD author)
+Email resolved: <span class="g">ulhas@procedure.tech</span>  (verified, high confidence)
+Also noted    : co-founder Braj (CEO) — product/domain</pre>
+    <div class="meta">Third-party contacts and secrets are stripped from this demo; only your own public/professional details are shown.</div>
+  </div>
+
+  <div class="card">
+    <h2>04 · Prepare <span class="tag auto">agent</span></h2>
+    <p>Two tailored CVs generated from one source of truth — because the role is AI-native, the framing leads with Django/DRF <em>and</em> the MCP server + RAG work.</p>
+    <div class="grid2">
+      <pre><span class="c"># HTML → ATS PDF</span>
+output/cv-…-procedure-2026-10-11.pdf
+pages: 2 · A4 · machine-readable</pre>
+      <pre><span class="c"># LaTeX → PDF</span>
+output/…-full-stack-ai-native.tex
+compiled with tectonic</pre>
+    </div>
+    <div class="meta">Plus an interview-prep doc and a story bank, keyed to the JD's requirements.</div>
+  </div>
+
+  <div class="card">
+    <h2>05 · Draft &amp; review <span class="tag human">human</span></h2>
+    <p>The outreach email is drafted and saved — then it stops. I read it, edit it, and send it myself. Every application in this system has a human at the end of the chain.</p>
+    <pre><span class="c">status: [x] contact verified  [x] CV generated  [x] email drafted  [ ] sent by human</span></pre>
+  </div>
+
+  <div class="note">
+    <b>Why show you this?</b> You're hiring for an "AI-Native" full-stack engineer. I build these systems — the same MCP server / RAG / agent orchestration you'd be building with clients, I run on my own desk. This page was generated by the pipeline it describes.
+  </div>
+
+  <div class="foot">
+    <span><b>Palash Tiwari</b> — AI-native full-stack engineer (Django/DRF + React + RAG/MCP)</span>
+    <span><a href="https://github.com/palash018">github.com/palash018</a> · <a href="https://linkedin.com/in/palash-tiwari-048349202">LinkedIn</a> · paltiw018@gmail.com</span>
+  </div>
+
+</div>
+</body>
+</html>
